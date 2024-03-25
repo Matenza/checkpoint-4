@@ -1,0 +1,28 @@
+CREATE DATABASE gestion;
+USE gestion;
+
+CREATE TABLE clients (
+  IdClient int NOT NULL,
+  Nom varchar(300) NOT NULL,
+  Adresse varchar(95) NOT NULL,
+  PRIMARY KEY (IdClient)
+);
+CREATE TABLE produit (
+  IdProduit int NOT NULL,
+  Nom varchar(75) NOT NULL,
+  Prix decimal(55,0) NOT NULL,
+  PRIMARY KEY (IdProduit),
+  CONSTRAINT ctrt_prix CHECK ((Prix > 0))
+) ;
+CREATE TABLE commande (
+  id_commande int NOT NULL,
+  id_client int NOT NULL,
+  id_produit int NOT NULL,
+  Quantité int NOT NULL,
+  date_commande date NOT NULL,
+  PRIMARY KEY (id_commande),
+  KEY id_client_idx (id_client),
+  KEY id_produit_idx (id_produit),
+  CONSTRAINT id_client FOREIGN KEY (id_client) REFERENCES clients (IdClient) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT id_produit FOREIGN KEY (id_produit) REFERENCES produit (IdProduit) ON DELETE RESTRICT ON UPDATE RESTRICT
+);
